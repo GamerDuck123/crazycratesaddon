@@ -44,18 +44,20 @@ public class PlaceHolders
   }
   
   public String onPlaceholderRequest(Player p, String identifier)
-  {		
+  {
 	  if (identifier.contains("rewards")) {
 		  String[] id = identifier.split("_");
-		  c = CrazyCrates.getInstance().getCrateFromName(id[1]);
-		  i++;
-		  int e = c.getPrizes().size();
-		  if (i == e) {
-			  i = 0;
+		  if (id.length >= 1) {
+			  c = CrazyCrates.getInstance().getCrateFromName(id[1]);
+			  i++;
+			  int e = c.getPrizes().size();
+			  if (i == e) {
+				  i = 0;
+			  }
+			  return c.getPrizes().get(i).getDisplayItem().getItemMeta().getDisplayName();
 		  }
-		  return c.getPrizes().get(i).getDisplayItem().getItemMeta().getDisplayName();
 	    }
 	return identifier;
-    
+  
   }
 }
