@@ -1,6 +1,8 @@
 name: CCAddon
 author: GamerDuck123
 main: me.garrett.ccaddon.CCAddon
+softdepend: [CrazyCrates]
+depend: [PlaceholderAPI]
 version: 1.0
 description: >
              Allows any PondMC Server to format chat

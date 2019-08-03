@@ -1,61 +1,52 @@
 package me.garrett.ccaddon;
 
-
-import org.bukkit.entity.Player;
-
-import me.badbones69.crazycrates.api.CrazyCrates;
-import me.badbones69.crazycrates.api.objects.Crate;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.plugin.Plugin;
 
 public class PlaceHolders
-  extends PlaceholderExpansion
-{
-	public int i;
-	//private final CCAddon plugin;
-	public PlaceHolders(CCAddon plugin) {
-   //     this.plugin = plugin;
-		i = 0;
-    }
+extends PlaceholderExpansion {
+	
+	public int i = 0;
+	public Plugin plugin;
 	public String prize;
-	public Crate c;
-  public boolean canRegister()
-  {
-    return true;
-  }
-  
-  public String getAuthor()
-  {
-    return "gamerduck";
-  }
-  
-  public String getIdentifier()
-  {
-    return "ccaddon";
-  }
-  
-  public String getPlugin()
-  {
-    return null;
-  }
-  
-  public String getVersion()
-  {
-    return "1.0.0";
-  }
-  
-  public String onPlaceholderRequest(Player p, String identifier)
-  {		
-	  if (identifier.contains("rewards")) {
-		  String[] id = identifier.split("_");
-		  c = CrazyCrates.getInstance().getCrateFromName(id[1]);
-		  i++;
-		  int e = c.getPrizes().size();
-		  if (i == e) {
-			  i = 0;
-		  }
-		  return c.getPrizes().get(i).getDisplayItem().getItemMeta().getDisplayName();
-	    }
-	return identifier;
-    
-  }
+	private CrateSupport crateSupport = CCAddon.crateSupport;
+	
+	public PlaceHolders(Plugin plugin) {
+		this.plugin = plugin;
+	}
+	
+	@Override
+	public String getAuthor() {
+		return "gamerduck";
+	}
+	
+	@Override
+	public String getIdentifier() {
+		return "ccaddon";
+	}
+	
+	@Override
+	public String getVersion() {
+		return plugin.getDescription().getVersion();
+	}
+	
+	@Override
+	public String onRequest(OfflinePlayer player, String identifier) {
+		if(identifier.contains("rewards")) {
+			String[] id = identifier.split("_");
+			if(id.length >= 1) {
+				String crateName = id[1];
+				if(crateSupport.isCrate(crateName)) {
+					i++;
+					if(i == crateSupport.getPrizeSize(crateName)) {
+						i = 0;
+					}
+					return crateSupport.getDisplayItem(crateName, i).getItemMeta().getDisplayName();
+				}
+			}
+		}
+		return identifier;
+	}
+	
 }
