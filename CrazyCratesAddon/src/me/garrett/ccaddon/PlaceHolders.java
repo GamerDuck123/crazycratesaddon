@@ -50,8 +50,7 @@ public class PlaceHolders
 		  if (id.length >= 1) {
 			  c = CrazyCrates.getInstance().getCrateFromName(id[1]);
 			  i++;
-			  int e = c.getPrizes().size();
-			  if (i == e) {
+			  if (i == c.getPrizes().size()) {
 				  i = 0;
 			  }
 			  return c.getPrizes().get(i).getDisplayItem().getItemMeta().getDisplayName();
