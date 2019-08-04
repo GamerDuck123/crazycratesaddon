@@ -5,4 +5,4 @@ softdepend: [CrazyCrates]
 depend: [PlaceholderAPI]
 version: 1.0
 description: >
-             Allows any PondMC Server to format chat
+             Display the items in your CrazyCrates Crates in style!
